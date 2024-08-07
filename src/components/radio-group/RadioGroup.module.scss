@@ -36,13 +36,13 @@
 
 /* Убираем бордер у последнего в radiogroup, чтобы не было двойного бордера */
 
-.item:last-child .label {
-	border: none;
-}
-
 .label:hover,
 .item[data-checked='true'] .label:hover {
 	background-color: var(--gold, #ffc802);
+}
+
+.item:last-child .label {
+	border: none;
 }
 
  .label:hover {

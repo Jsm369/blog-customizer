@@ -15,8 +15,8 @@
 	background-color: #FFC802;
 
 	&:hover {
-		transition: all 0.5s ease;
 		background-color: #FFEDAB;
+		transition: all 0.5s ease;
 	}
 }
 
@@ -24,9 +24,9 @@
 	background-color: transparent;
 
 	&:hover {
-		transition: all 0.5s ease;
 		background-color: #000000;
-		color: #fff;
+		color: #ffffff;
+		transition: all 0.5s ease;
 	}
 }
 

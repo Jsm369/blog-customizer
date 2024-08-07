@@ -1,5 +1,6 @@
 .container {
 	position: fixed;
+	cursor: pointer;
 	top: 31px;
 	display: flex;
 	flex-shrink: 0;
@@ -11,16 +12,15 @@
 	background-color: #000000;
 	border-right: 1px;
 	transition: all 0.5s ease;
-	cursor: pointer;
 
 	&:hover {
-		transition: all 0.5s ease;
 		background-color: #FFC802;
+		transition: all 0.5s ease;
 	}
 
 	&:active {
-		transition: all 0.5s ease;
 		background-color: #787878;
+		transition: all 0.5s ease;
 	}
 }
 
