@@ -58,6 +58,7 @@ export const ArticleParamsForm = ({ onApply }: ArticleFormProps) => {
 
 	const handleApply = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		handleClick();
 
 		onApply({
 			fontFamily: selectedFontFamily.value,
@@ -108,38 +109,52 @@ export const ArticleParamsForm = ({ onApply }: ArticleFormProps) => {
 				ref={ref}
 				className={clsx(styles.container, isOpen && styles.container_open)}>
 				<form className={styles.form} onSubmit={handleApply}>
-					<Select
-						selected={selectedFontFamily}
-						onChange={setSelectedFontFamily}
-						options={fontFamilyOptions}
-						title='Шрифт'
-					/>
-					<RadioGroup
-						selected={selectedFontSize}
-						name='radio'
-						onChange={setSelectedFontSize}
-						options={fontSizeOptions}
-						title='размер шрифта'
-					/>
-					<Select
-						selected={selectedFontColor}
-						onChange={setSelectedFontColor}
-						options={fontColors}
-						title='цвет шрифта'
-					/>
-					<Separator />
-					<Select
-						selected={selectedBackgroundColor}
-						onChange={setSelectedBackgroundColor}
-						options={backgroundColors}
-						title='цвет фона'
-					/>
-					<Select
-						selected={selectedContentSize}
-						onChange={setSelectedContentSize}
-						options={contentWidthArr}
-						title='Ширина контента'
-					/>
+					<div className={clsx(styles.form_input)}>
+						<Select
+							selected={selectedFontFamily}
+							onChange={setSelectedFontFamily}
+							options={fontFamilyOptions}
+							title='Шрифт'
+						/>
+					</div>
+					<div className={clsx(styles.form_input)}>
+						<RadioGroup
+							selected={selectedFontSize}
+							name='radio'
+							onChange={setSelectedFontSize}
+							options={fontSizeOptions}
+							title='размер шрифта'
+						/>
+					</div>
+					<div className={clsx(styles.form_input)}>
+						<Select
+							selected={selectedFontColor}
+							onChange={setSelectedFontColor}
+							options={fontColors}
+							title='цвет шрифта'
+						/>
+					</div>
+					<div className={clsx(styles.form_input)}>
+						<Separator />
+					</div>
+					<div className={clsx(styles.form_input)}>
+						<Select
+							selected={selectedBackgroundColor}
+							onChange={setSelectedBackgroundColor}
+							options={backgroundColors}
+							title='цвет фона'
+						/>
+					</div>
+
+					<div className={clsx(styles.form_input)}>
+						<Select
+							selected={selectedContentSize}
+							onChange={setSelectedContentSize}
+							options={contentWidthArr}
+							title='Ширина контента'
+						/>
+					</div>
+
 					<div className={styles.bottomContainer}>
 						<Button onClick={handleReset} title='Сбросить' type='reset' />
 						<Button title='Применить' type='submit' />

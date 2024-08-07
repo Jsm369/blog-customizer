@@ -8,12 +8,25 @@
 	text-align: center;
 	border: 1px solid #000000;
 	cursor: pointer;
+	transition: all 0.5s ease;
 }
 
-.button:active {
-	background: var(--gold, #ffc802);
+.button_submit {
+	background-color: #FFC802;
+
+	&:hover {
+		transition: all 0.5s ease;
+		background-color: #FFEDAB;
+	}
 }
 
-.button:hover {
-	background: var(--gold, #ffc802);
+.button_reset {
+	background-color: transparent;
+
+	&:hover {
+		transition: all 0.5s ease;
+		background-color: #000000;
+		color: #fff;
+	}
 }
+
