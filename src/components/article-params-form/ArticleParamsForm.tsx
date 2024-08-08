@@ -48,12 +48,12 @@ export const ArticleParamsForm = ({ onApply }: ArticleFormProps) => {
 	const [selectedBackgroundColor, setSelectedBackgroundColor] = useState(
 		initialState.backgroundColor
 	);
-	const [isOpen, setIsOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	const ref = useRef<HTMLDivElement | null>(null);
 
 	const handleClick = () => {
-		setIsOpen(!isOpen);
+		setIsMenuOpen(!isMenuOpen);
 	};
 
 	const handleApply = (e: React.FormEvent<HTMLFormElement>) => {
@@ -81,12 +81,16 @@ export const ArticleParamsForm = ({ onApply }: ArticleFormProps) => {
 
 	const handleClickOutside = (e: MouseEvent) => {
 		if (ref.current && !ref.current.contains(e.target as Node)) {
-			setIsOpen(false);
+			setIsMenuOpen(false);
 		}
 	};
 
 	useEffect(() => {
-		document.addEventListener('mousedown', handleClickOutside);
+		if (isMenuOpen) {
+			document.addEventListener('mousedown', handleClickOutside);
+		} else {
+			document.removeEventListener('mousedown', handleClickOutside);
+		}
 		return () => {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
@@ -104,10 +108,10 @@ export const ArticleParamsForm = ({ onApply }: ArticleFormProps) => {
 
 	return (
 		<>
-			<ArrowButton isOpen={isOpen} onClick={handleClick} />
+			<ArrowButton isOpen={isMenuOpen} onClick={handleClick} />
 			<aside
 				ref={ref}
-				className={clsx(styles.container, isOpen && styles.container_open)}>
+				className={clsx(styles.container, isMenuOpen && styles.container_open)}>
 				<form className={styles.form} onSubmit={handleApply}>
 					<div className={clsx(styles.form_input)}>
 						<Select
