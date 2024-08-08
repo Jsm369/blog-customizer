@@ -1,5 +1,6 @@
 .container {
 	position: fixed;
+	cursor: pointer;
 	top: 31px;
 	display: flex;
 	flex-shrink: 0;
@@ -10,7 +11,17 @@
 	height: 100px;
 	background-color: #000000;
 	border-right: 1px;
-	transition: transform 0.5s ease;
+	transition: all 0.5s ease;
+
+	&:hover {
+		background-color: #FFC802;
+		transition: all 0.5s ease;
+	}
+
+	&:active {
+		background-color: #787878;
+		transition: all 0.5s ease;
+	}
 }
 
 .container_open {
@@ -22,7 +33,7 @@
 	width: 48px;
 	height: 48px;
 	transform: rotate(180deg);
-	transition: transform 0.5s ease;
+	transition: all 0.5s ease;
 }
 
 .arrow_open {

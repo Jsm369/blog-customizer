@@ -6,9 +6,31 @@ import { Text } from 'components/text';
 
 import styles from './Article.module.scss';
 
-export const Article = () => {
+type ArticleProps = {
+	fontFamily: string;
+	fontSize: string;
+	fontColor: string;
+	backgroundColor: string;
+	contentWidth: string;
+};
+
+export const Article = ({
+	fontFamily,
+	fontSize,
+	fontColor,
+	backgroundColor,
+	contentWidth,
+}: ArticleProps) => {
 	return (
-		<article className={clsx(styles.article)}>
+		<article
+			style={{
+				fontFamily: fontFamily,
+				fontSize: fontSize,
+				color: fontColor,
+				backgroundColor: backgroundColor,
+				width: contentWidth,
+			}}
+			className={clsx(styles.article)}>
 			<Text as='h1' size={45} weight={800} uppercase dynamicLite>
 				Портрет Западной Швейцарии
 			</Text>

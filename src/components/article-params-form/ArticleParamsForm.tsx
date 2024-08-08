@@ -1,16 +1,166 @@
 import { ArrowButton } from 'components/arrow-button';
 import { Button } from 'components/button';
-
+import React, { useState, useRef, useEffect } from 'react';
 import styles from './ArticleParamsForm.module.scss';
+import clsx from 'clsx';
+import { RadioGroup } from 'components/radio-group';
+import { Select } from 'components/select';
+import {
+	backgroundColors,
+	contentWidthArr,
+	fontColors,
+	fontFamilyOptions,
+	fontSizeOptions,
+} from 'src/constants/articleProps';
+import { Separator } from 'components/separator';
 
-export const ArticleParamsForm = () => {
+type ArticleFormProps = {
+	onApply: (styles: {
+		fontFamily: string;
+		fontSize: string;
+		fontColor: string;
+		backgroundColor: string;
+		contentWidth: string;
+	}) => void;
+};
+
+const initialState = {
+	fontFamily: fontFamilyOptions[0],
+	fontSize: fontSizeOptions[0],
+	fontColor: fontColors[0],
+	backgroundColor: backgroundColors[0],
+	contentWidth: contentWidthArr[0],
+};
+
+export const ArticleParamsForm = ({ onApply }: ArticleFormProps) => {
+	const [selectedFontFamily, setSelectedFontFamily] = useState(
+		initialState.fontFamily
+	);
+	const [selectedContentSize, setSelectedContentSize] = useState(
+		initialState.contentWidth
+	);
+	const [selectedFontSize, setSelectedFontSize] = useState(
+		initialState.fontSize
+	);
+	const [selectedFontColor, setSelectedFontColor] = useState(
+		initialState.fontColor
+	);
+	const [selectedBackgroundColor, setSelectedBackgroundColor] = useState(
+		initialState.backgroundColor
+	);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+	const ref = useRef<HTMLDivElement | null>(null);
+
+	const handleClick = () => {
+		setIsMenuOpen(!isMenuOpen);
+	};
+
+	const handleApply = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		handleClick();
+
+		onApply({
+			fontFamily: selectedFontFamily.value,
+			fontSize: selectedFontSize.value,
+			fontColor: selectedFontColor.value,
+			backgroundColor: selectedBackgroundColor.value,
+			contentWidth: selectedContentSize.value,
+		});
+	};
+
+	const handleReset = () => {
+		onApply({
+			fontFamily: initialState.fontFamily.value,
+			fontSize: initialState.fontSize.value,
+			fontColor: initialState.fontColor.value,
+			backgroundColor: initialState.backgroundColor.value,
+			contentWidth: initialState.contentWidth.value,
+		});
+	};
+
+	const handleClickOutside = (e: MouseEvent) => {
+		if (ref.current && !ref.current.contains(e.target as Node)) {
+			setIsMenuOpen(false);
+		}
+	};
+
+	useEffect(() => {
+		if (isMenuOpen) {
+			document.addEventListener('mousedown', handleClickOutside);
+		} else {
+			document.removeEventListener('mousedown', handleClickOutside);
+		}
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [handleClickOutside]);
+
+	useEffect(() => {
+		onApply({
+			fontFamily: initialState.fontFamily.value,
+			fontSize: initialState.fontSize.value,
+			fontColor: initialState.fontColor.value,
+			backgroundColor: initialState.backgroundColor.value,
+			contentWidth: initialState.contentWidth.value,
+		});
+	}, []);
+
 	return (
 		<>
-			<ArrowButton />
-			<aside className={styles.container}>
-				<form className={styles.form}>
+			<ArrowButton isOpen={isMenuOpen} onClick={handleClick} />
+			<aside
+				ref={ref}
+				className={clsx(styles.container, isMenuOpen && styles.container_open)}>
+				<form className={styles.form} onSubmit={handleApply}>
+					<div className={clsx(styles.form_input)}>
+						<Select
+							selected={selectedFontFamily}
+							onChange={setSelectedFontFamily}
+							options={fontFamilyOptions}
+							title='Шрифт'
+						/>
+					</div>
+					<div className={clsx(styles.form_input)}>
+						<RadioGroup
+							selected={selectedFontSize}
+							name='radio'
+							onChange={setSelectedFontSize}
+							options={fontSizeOptions}
+							title='размер шрифта'
+						/>
+					</div>
+					<div className={clsx(styles.form_input)}>
+						<Select
+							selected={selectedFontColor}
+							onChange={setSelectedFontColor}
+							options={fontColors}
+							title='цвет шрифта'
+						/>
+					</div>
+					<div className={clsx(styles.form_input)}>
+						<Separator />
+					</div>
+					<div className={clsx(styles.form_input)}>
+						<Select
+							selected={selectedBackgroundColor}
+							onChange={setSelectedBackgroundColor}
+							options={backgroundColors}
+							title='цвет фона'
+						/>
+					</div>
+
+					<div className={clsx(styles.form_input)}>
+						<Select
+							selected={selectedContentSize}
+							onChange={setSelectedContentSize}
+							options={contentWidthArr}
+							title='Ширина контента'
+						/>
+					</div>
+
 					<div className={styles.bottomContainer}>
-						<Button title='Сбросить' type='reset' />
+						<Button onClick={handleReset} title='Сбросить' type='reset' />
 						<Button title='Применить' type='submit' />
 					</div>
 				</form>
